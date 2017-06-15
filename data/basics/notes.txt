@@ -1,0 +1,46 @@
+cube0			solid cube, side length 2
+cube1			cube with one side open, side length 2, thickness 0.1
+cube2			cube with both sides open, side length 2, thickness 0.1
+
+sphere0			solid sphere, side radius 1
+sphere1			solid hemisphere, side radius 1
+sphere2			hemisphere with bottom open, radius 1, thickness 0.1
+
+torus0			solid torus, major radius 1, minor radius 0.25
+torus1			solid torus, major radius 1, minor radius 0.35
+torus2			solid torus, major radius 1, minor radius 0.15
+
+cylinder0		solid cylinder, radius 1, depth 2
+cylinder1		cylinder with one side open, radius 1, depth 2, thickness 0.1
+cylinder2		cylinder with both sides open, radius 1, depth 2, thickness 0.1
+cylinder3		solid half cylinder, radius 1, depth 2
+cylinder4		half cylinder with side open, radius 1, depth 2, thickness 0.1
+cylinder5		half cylinder with top and bottom open, radius 2, depth 2, thickness 0.1
+
+cone0			solid cone, major radius 1, minor radius 0, depth 2
+cone1			cone with bottom open, major radius 1, minor radius 0. depth 2, thickness 0.1
+cone2			solid cone, major radius 1, minor radius 0.5, depth 2
+cone3			cone with bottom open, major radius 1, minor radius 0.5, depth 2, 
+cone4			cone with top open, major radius 1, minor radius 0.5, depth 2
+cone5			cone with both sides open, major radius 1, minor radius 0.5, depth 2
+
+tet0			solid tet, major radius 1, minor radius 0, depth 2
+tet1			tet with bottom open, major radius 1, minor radius 0. depth 2, thickness 0.1
+tet2			solid tet, major radius 1, minor radius 0.5, depth 2
+tet3			tet with bottom open, major radius 1, minor radius 0.5, depth 2, 
+tet4			tet with top open, major radius 1, minor radius 0.5, depth 2
+tet5			tet with both sides open, major radius 1, minor radius 0.5, depth 2
+
+pyramid0		solid pyramid, major radius 1, minor radius 0, depth 2
+pyramid1		pyramid with bottom open, major radius 1, minor radius 0. depth 2, thickness 0.1
+pyramid2		solid pyramid, major radius 1, minor radius 0.5, depth 2
+pyramid3		pyramid with bottom open, major radius 1, minor radius 0.5, depth 2, 
+pyramid4		pyramid with top open, major radius 1, minor radius 0.5, depth 2
+pyramid5		pyramid with both sides open, major radius 1, minor radius 0.5, depth 2
+
+wedge0			solid wedge, right angle triangle, side length 2, width 2
+wedge1			wedge with bottom open, right angle triangle, side length 2, width 2, thickness 0.1
+wedge2			wedge with two sides open, right angle triangle, side length 2, width 2, thickness 0.1
+wedge3			solid wedge, equilateral triangle, side length 2, width 2
+wedge4			wedge with bottom open, equilateral triangle, side length 2, width 2
+wedge5			wedge with two sides open, equilateral triangle, side length 2, width 2

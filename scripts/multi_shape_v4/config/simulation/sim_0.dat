@@ -1,0 +1,4 @@
+[DEFAULT]
+duration = 3.0
+FPS = 300
+GUI = 0

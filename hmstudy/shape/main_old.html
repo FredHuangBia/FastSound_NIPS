@@ -1,0 +1,389 @@
+<!-- ffmpeg -i 3.mp4 -c:v libvpx -crf 10 -b:v 1M -c:a libvorbis 3.webm -->
+<!-- ffmpeg -i 3.wav -c:a libfdk_aac -b:a 128k 3.m4a -->
+<!-- ffmpeg -i 3.wav  -acodec libvorbis 3.ogg -->
+<!-- audio of tet is test 3 and index 50, audio of torus is test 6 and index 51 -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Which Sounds Better?</title>
+<script type="text/javascript" src="../jQuery.js"> </script>
+<script type="text/javascript" src="./home.js"> </script>
+<style>
+.content{
+  width:1000px;
+  padding:25px;
+  margin:25px auto; 
+  background-color:#fff; 
+  border-radius: 25px; 
+  box-shadow: 0px 0px 10px #888;
+}
+
+.caption{
+  width: 400px;
+  float: left;
+  display: inline;
+  text-align: center;
+  font-weight: bolder; 
+}
+
+.choice{
+  height: 50px;
+  width: 300px;
+  -webkit-appearance: button;
+  font-size: 16px;
+}  
+
+.submit{
+  width: 800px;
+  padding:0px;
+  margin:0px auto; 
+  background-color:#fff; 
+  text-align: center;
+}
+
+body{
+  background-color:#CCC;
+  font-family:Arial;
+  padding:0;
+  margin:0;
+}
+
+</style>
+</head>
+
+
+<body>
+<div class="content">
+<table>
+<tr>
+  <h2 id="instruction" style="margin-top: 5px ; text-align: center;">Before you start</h2>
+</tr>
+<tr>
+  <!-- <td width="1600" align="right"> -->
+    <p id="subins1" style="text-align: center;">You will see 3 shape attribtes with their corresponding objects, sounds, and videos. </p>
+    <p id="subins2" style="text-align: center;">Each sound and video corresponds to the object <strong>falling onto the ground</strong>.</p>
+  <!-- </td> -->
+<!--   <td width="200" align="left">
+  <img id="img0"  width="200" src="data/test1.png/">
+  </td> -->
+</tr>
+
+</table>
+</div>
+
+<div class="content">
+<h2 id="quest" style="margin-top: 5px; text-align: center;">Please listen to the sounds and watch the videos</h2>
+    
+<br>
+<table width="800" border="0" align="center">
+  <tr>
+    <td width="300" align="center">
+        <audio style="width: 300px;  visibility:hidden" id="a0" onended="audioPlayed(0)" controls>
+            <source id="s0a" type="audio/m4a">
+            <source id="s0b" type="audio/ogg">
+            Your browser does not support the audio tag.
+        </audio>
+    </td>
+  </tr>
+  <tr>
+    <p id="requirement" style="text-align: center;">You are required to watch each sample video <strong>at least once</strong>. Then click the <strong>Start</strong> button.<br><br>You will still be able to review the sample sounds and images later, <strong>but not the videos</strong>.</p><br>
+    <!-- <p style="text-align: center;">Note that each object can have different material.</p> -->
+  </tr>
+</table>
+<br>
+<br>
+
+<div align="center">
+  <table >
+
+    <tr>
+      <td>
+        <div align="center"> <p style="font-size:16px"> <strong>Pointy</strong> example </p></div>
+        <div id="v1" align="center"> <video id="video1" width="200" controls src="data/shape/1.webm" onended="audioPlayed(1)"> </video> </div>
+        <div align="center">
+          <img id="img1"  width="200"/>
+          <br>
+          <audio style="width: 200px; visibility: hidden " id="a1"  controls>
+            <source id="s1a" type="audio/m4a">
+            <source id="s1b" type="audio/ogg">
+            Your browser does not support the audio tag.
+          </audio> 
+
+        </div>
+      </td>
+
+      <td>
+      <div align="center">
+        <div align="center"><p style="font-size:16px"> <strong>Non-Pointy</strong> example </p></div>
+        <div id="v2" align="center"> <video id="video2" width="200" controls src="data/shape/3.webm" onended="audioPlayed(2)"> </video> </div>
+        <div align="center">
+          <img id="img2"  width="200"/>
+          <br>
+          <audio style="width: 200px; visibility: hidden " id="a2"  controls>
+            <source id="s2a" type="audio/m4a">
+            <source id="s2b" type="audio/ogg">
+            Your browser does not support the audio tag.
+          </audio>              
+        </div>
+      </td>
+
+<!--       <td>
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      </td>
+
+      <td>
+        <table >
+          <tr>
+            <div align="center">
+              <p id="quest1" style="font-size:22px">Is the shape <strong>pointy</strong>?</p>
+            </div>
+          </tr>
+          <tr>
+            <div align="center">
+              <td>
+                <p><input id="bt1" disabled type="button" class="choice" onclick="madeChoice(0)" style="width:160px; visibility: hidden" value="Pointy"></p>
+              </td>
+              <td>
+                <p><input id="bt2" disabled type="button" class="choice" onclick="madeChoice(1)" style="width:160px; visibility: hidden" value="Non-Pointy"></p>
+              </td>
+            </div>
+          </tr>
+          <tr>
+            <td>
+            <p id="choice0" style="text-align: center; font-weight: bolder; visibility: hidden; font-size:20px;" >Pointy</p>
+            </td>
+            <td>
+            <p id="choice1" style="text-align: center; font-weight: bolder; visibility: hidden; font-size:20px;" >Non-Pointy</p>
+            </td>
+          </tr>
+        </table>
+      </td> -->
+
+    </tr>
+
+
+
+    <tr>
+      <td>
+        <table >
+          <tr>
+            <div align="center">
+              <p id="quest1" style="font-size:22px">Is the shape <strong>pointy</strong>?</p>
+            </div>
+          </tr>
+          <tr>
+            <div align="center">
+              <td>
+                <p><input id="bt1" disabled type="button" class="choice" onclick="madeChoice(0)" style="width:160px; visibility: hidden" value="Pointy"></p>
+              </td>
+              <td>
+                <p><input id="bt2" disabled type="button" class="choice" onclick="madeChoice(1)" style="width:160px; visibility: hidden" value="Non-Pointy"></p>
+              </td>
+            </div>
+          </tr>
+          <tr>
+            <td>
+            <p id="choice0" style="text-align: center; font-weight: bolder; visibility: hidden; font-size:20px;" >Pointy</p>
+            </td>
+            <td>
+            <p id="choice1" style="text-align: center; font-weight: bolder; visibility: hidden; font-size:20px;" >Non-Pointy</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+
+
+    <tr>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+        <br><br><br><br><br>
+      </td>
+      <td>
+      </td>
+    </tr>
+
+
+
+
+
+    <tr>
+      <td>
+        <div align="center"> <p style="font-size:16px">  <strong>Curved</strong> face example </p></div>
+        <div id="v3" align="center"> <video id="video3" width="200" controls src="data/shape/6.webm" onended="audioPlayed(3)"> </video> </div>
+        <div align="center">
+          <img id="img3"  width="200"/>
+          <br>
+          <audio style="width: 200px; visibility: hidden" id="a3"  controls>
+            <source id="s3a" type="audio/m4a">
+            <source id="s3b" type="audio/ogg">
+            Your browser does not support the audio tag.
+          </audio> 
+
+        </div>
+      </td>
+
+      <td>
+      <div align="center">
+        <div align="center"><p style="font-size:16px"> <strong>No curved</strong> face example 2 </p></div>
+        <div id="v4" align="center"> <video id="video4" width="200" controls src="data/shape/10.webm" onended="audioPlayed(4)"> </video> </div>
+        <div align="center">
+          <img id="img4"  width="200"/>
+          <br>
+          <audio style="width: 200px; visibility: hidden " id="a4" controls>
+            <source id="s4a" type="audio/m4a">
+            <source id="s4b" type="audio/ogg">
+            Your browser does not support the audio tag.
+          </audio>              
+        </div>
+      </td>
+
+<!--       <td>
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      </td>
+
+      <td>
+        <table>
+          <tr>
+            <div align="center">
+              <p id="quest2" style="font-size:22px">Does the shape have <strong>curved</strong> face?</p>
+            </div>
+          </tr>
+          <tr>
+            <div align="center">
+              <td>
+                <p><input id="bt3" disabled type="button" class="choice" onclick="madeChoice(2)" style="width:160px; visibility: hidden" value="Curved Face"></p>
+              </td>
+              <td>
+                <p><input id="bt4" disabled type="button" class="choice" onclick="madeChoice(3)" style="width:160px; visibility: hidden" value="No Curved Face"></p>
+              </td>
+            </div>
+          </tr>
+          <tr>
+            <td>
+              <p id="choice2" style="text-align: center; font-weight: bolder; visibility: hidden; font-size:20px;" >Curved Face</p>
+            </td>
+            <td>
+              <p id="choice3" style="text-align: center; font-weight: bolder; visibility: hidden; font-size:20px;" >No Curved Face</p>
+            </td>
+          </tr>  
+        </table>
+      </td> -->
+    </tr>
+
+
+
+    <tr>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td>
+        <br><br><br><br><br>
+      </td>
+      <td>
+      </td>
+    </tr>
+
+
+
+    <tr>
+      <td>
+        <div align="center"> <p style="font-size:16px"> <strong>Has edge</strong> example </p></div>
+        <div id="v5" align="center"> <video id="video5" width="200" controls src="data/shape/13.webm" onended="audioPlayed(5)"> </video> </div>
+        <div align="center">
+          <img id="img5"  width="200"/>
+          <br>
+          <audio style="width: 200px; visibility: hidden" id="a5" controls>
+            <source id="s5a" type="audio/m4a">
+            <source id="s5b" type="audio/ogg">
+            Your browser does not support the audio tag.
+          </audio> 
+
+        </div>
+      </td>
+
+      <td>
+      <div align="center">
+        <div align="center"><p style="font-size:16px"> <strong>No edge</strong> example </p></div>
+        <div id="v6" align="center"> <video id="video6" width="200" controls src="data/shape/14.webm" onended="audioPlayed(6)"> </video> </div>
+        <div align="center">
+          <img id="img6"  width="200"/>
+          <br>
+          <audio style="width: 200px; visibility: hidden " id="a6" controls>
+            <source id="s6a" type="audio/m4a">
+            <source id="s6b" type="audio/ogg">
+            Your browser does not support the audio tag.
+          </audio>              
+        </div>
+      </td>
+
+ <!--      <td>
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      </td>
+
+      <td>
+        <table>
+          <tr>
+            <div align="center">
+              <p id="quest3" style="font-size:22px">Does the shape have <strong>edge</strong> ?</p>
+            </div>
+          </tr>
+          <tr>
+            <div align="center">
+              <td>
+                <p><input id="bt5" disabled type="button" class="choice" onclick="madeChoice(4)" style="width:160px; visibility: hidden" value="Has Edge"></p>
+              </td>
+              <td>
+                <p><input id="bt6" disabled type="button" class="choice" onclick="madeChoice(5)" style="width:160px; visibility: hidden" value="No Edge"></p>
+              </td>
+            </div>
+          </tr>
+          <tr>
+            <td>
+              <p id="choice4" style="text-align: center; font-weight: bolder; visibility: hidden; font-size:20px;" >Has Edge</p>
+            </td>
+            <td>
+              <p id="choice5" style="text-align: center; font-weight: bolder; visibility: hidden; font-size:20px;" >No Edge</p>
+            </td>
+          </tr>  
+        </table>
+      </td> -->
+    </tr>
+
+  </table>
+</div>
+</br>
+
+<!-- 
+<table width="800" border="0" align="center">
+  <tr>
+    <p id="choice" style="text-align: center; font-weight: bolder; visibility: hidden; font-size:20px;"  >Please listen to the sound before making your choice.</p>
+  </tr>
+</table> -->
+
+
+</br>
+
+<p style="color: #F00; text-align: center;">Note: We hand review all work and reject that of poor quality. We appreciate your cooperation.</p>
+
+<div class="submit">
+<form id="mturk_form" method="POST" action="https://www.mturk.com/mturk/externalSubmit">
+<input type="button" disabled id="nextButton" onclick="start()" value="Start" style="width:80px; height:40px; font-size:14px">
+<input type="hidden" id="assignmentId" name="assignmentId" value="">
+<input type="submit" disabled id="submitButton" onclick="clickButton()" value="Submit" style="width:80px; height:40px; font-size:14px">
+</form>
+</div>
+
+</br>
+  
+<div id="pageId" style="text-align: center;"> </div>
+
+</div>
+</body>
+</html>
