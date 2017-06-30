@@ -6,7 +6,7 @@ import math
 import os
 import sys
 
-ROOT = '' # where all sounds are located
+ROOT = '/data/vision/billf/object-properties/sound/sound/primitives/data/primV4a/' # where all sounds are located
 
 H_MAX = 2
 H_MIN = 1
@@ -22,7 +22,6 @@ def read_real_label(string):
 	label = [int(i) for i in string[0:2]]
 	label.append([float(i) for i in string[2:6]])
 	label = label + [float(i) for i in string[6:]]
-	label = reverse_mapping(label)
 	return label
 
 def get_nn_label(real_label):
@@ -44,14 +43,16 @@ def main():
 	start = int(sys.argv[1])
 	end = int(sys.argv[2])
 
-	datfile = open(os.join(ROOT, 'GT.dat'), 'w')
-	txtfile = open(os.join(ROOT, 'GT.txt'), 'w')
+	datfile = open(os.path.join(ROOT, '../primV4a_%06d_%06d.dat'%(start,end)), 'w')
+	txtfile = open(os.path.join(ROOT, '../primV4a_%06d_%06d.txt'%(start,end)), 'w')
 
 	for i in range(start, end+1):
 		labelfile = open(os.path.join(ROOT, '%03d' %(math.floor(i/100)+1), '%06d' %i, 'label.txt'),'r').readlines()[0].strip()
 		datfile.write('%06d %s\n' %(i, labelfile))
 		nn_label = get_nn_label(read_real_label(labelfile))
 		txtfile.write('%06d %s\n' %(i, label_to_str(nn_label)))
+		datfile.flush()
+		txtfile.flush()
 
 if __name__ == '__main__':
 	main()

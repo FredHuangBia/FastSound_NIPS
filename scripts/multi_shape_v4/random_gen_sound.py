@@ -18,11 +18,12 @@ colorHeader = '\x1b[6;30;42m '
 colorTail = ' \x1b[0m '
 
 SOUND_SCRIPTS = '/data/vision/billf/object-properties/sound/sound/primitives/scripts/multi_shape_v4/'
-DATASET = '/data/vision/billf/object-properties/sound/sound/primitives/data/primV4a/'
+DATASET = '/data/vision/billf/object-properties/sound/sound/primitives/data/transfer/'
 
 PI = np.pi
 
-PRIM = list(range(14))
+# PRIM = list(range(14))
+PRIM = list(range(14,18))
 H_MAX = 2.0
 H_MIN = 1.0
 ALPHA_MAX = -5
@@ -60,21 +61,21 @@ def gen_sound(label, path, prefix):
     '''Generate Sound using label'''
     output_dir = os.path.join(path, '%03d' %(math.floor(prefix/100)+1), '%06d' %prefix)
     mkdir(output_dir)
-    gen_config_script = os.path.join(SOUND_SCRIPTS, 'gen_config.sh')
+    gen_config_script = os.path.join(SOUND_SCRIPTS, 'gen_config_hmstudy.sh')
     config_arguments = [output_dir, str(label[3]), \
                         '[%.4f, %.4f, %.4f, %.4f]'%tuple(label[2]), \
-                        str(label[4]), str(label[5]), str(label[6])]
+                        str(label[4]), str(label[5]), str(label[6]), str(5)]
     call(['sh', gen_config_script]+config_arguments)
-    gen_sound_script = os.path.join(SOUND_SCRIPTS, 'gen_sound.py')
+    gen_sound_script = os.path.join(SOUND_SCRIPTS, 'gen_sound_test.py')
     sound_arguments = "%s 0 0 100000 10 10 10 %02d%d 0 0 0 > %s" \
         %(output_dir, label[0], label[1], os.path.join(output_dir, 'gen_sound.log'))
     call('python %s %s'%(gen_sound_script, sound_arguments), shell=True)
 
 def gen_random_label():
     '''generate random label for sound synthesis'''
-    shape = np.random.randint(14, size=1)
+    shape = np.random.randint(len(PRIM), size=1)
     prim_type = PRIM[shape[0]]
-    youngs = np.random.randint(10, size=1)[0]
+    youngs = np.random.randint(1, size=1)[0] ###
     quat = sample_quat_uniform()
     height = linear_random(H_MIN, H_MAX)[0]
     alpha = 10**linear_random(ALPHA_MIN, ALPHA_MAX)[0]

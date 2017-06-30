@@ -290,7 +290,7 @@ void RigidBodyFromObjExample::initPhysics()
             motionFile << objects[i].id << " " << gSimulationTime << " " << objPosition[0] << " " << objPosition[1] << " " << objPosition[2] << " " << objRotation[0][0] << " " << objRotation[0][1] << " " << objRotation[0][2] << " " <<objRotation[1][0] << " " << objRotation[1][1] << " " << objRotation[1][2] << " " << objRotation[2][0] << " " <<  objRotation[2][1] << " " <<  objRotation[2][2] << std::endl;
         }
         // static concave mesh
-	else if (std::stoi(objects[i].name) >= 1000000){
+        else if (std::stoi(objects[i].name) >= 1000000){
             std::cout << "No. " << i << " mesh created. Name " << objects[i].name << std::endl;
             
             btTriangleIndexVertexArray* meshInterface = new btTriangleIndexVertexArray();
@@ -420,7 +420,7 @@ void RigidBodyFromObjExample::initPhysics()
             btTransform startTransform;
             startTransform.setIdentity();
             btQuaternion quat = btQuaternion(objects[i].orn[0],objects[i].orn[1],objects[i].orn[2],objects[i].orn[3]);
-	    startTransform.setRotation(quat); 
+            startTransform.setRotation(quat); 
             btScalar	mass(objects[i].mass);
             bool isDynamic = (mass != 0.f);
             btVector3 localInertia(0,0,0);

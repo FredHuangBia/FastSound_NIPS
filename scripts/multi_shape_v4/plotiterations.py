@@ -1,12 +1,9 @@
 import matplotlib.pyplot as plt
 import os
 
-# root = '/data/vision/billf/object-properties/sound/sound/primitives/exp/'
-root = '/Users/qiujiali/Desktop/Remote/sound/primitives/exp/'
+root = '/Users/zhengjia/Desktop/sound/sound/primitives/exp/random_test/result/'
+tasks = ['stft_inverse_0200_01_None','stft_inverse_0020_10_None']
 
-# tasks = ['primV3b_nmh_corl_random_2','primV3b_nmh_corl_random_4','primV3b_nmh_corl_random_5', 'primV3b_nmh_stft_random_2', 'primV3b_nmh_stft_random_3', 'primV3b_nmh_stft_random_4', 'primV3b_nmh_stft_random_5']
-# tasks = ['primV3b_nmh_corl_random_6','primV3b_nmh_stft_random_6']
-tasks = ['primV3b_nmh_stft_random_7']
 def plot(ll_list,name,kind):
 	plt.plot(range(len(ll_list)),ll_list)
 	plt.xlabel("iterations")
@@ -15,28 +12,36 @@ def plot(ll_list,name,kind):
 	plt.clf()
 
 
-def parse_log(log_path):
-	log = open(log_path,'r')
+def parse_log(log_path, interval=1):
+	dist_log = open(os.path.join(log_path,'distance_log.txt'),'r')
+	all_dist = [line.split()[0] for line in dist_log]
+	prob_log = open(os.path.join(log_path,'prob_log.txt'),'r')
+	all_ll = [line.split()[0] for line in prob_log]
+	prob_log.close()
+	dist_log.close()
 	dist = []
 	ll = []
-	for line in log:
-		line = line.split()
-		dist.append(line[2])
-		ll.append(line[1])
+	for i in range(len(all_dist)):
+		if i%interval==0:
+			dist.append(all_dist[i])
+			ll.append(all_ll[i])
 	return ll, dist
 
 def main():
-	# target_file = open('/data/vision/billf/object-properties/sound/sound/primitives/www/primV3b_cnnF_soundnet8_pretrainnone_mse1_LR0.001/151/targets.txt','r')
-	target_file = open('/Users/qiujiali/Desktop/Remote/sound/primitives/www/primV3b_cnnF_soundnet8_pretrainnone_mse1_LR0.001/151/targets.txt','r')
-	targets = []
-	for line in target_file:
-		targets.append(line.split()[0])
-	for i in tasks:
-		os.chdir(root+i)
+	targets = [str(i) for i in range(20)]
+	for task in tasks:
+		n = int(task.split('_')[3])
+		paras = 7
+		if task.split('_')[-1] != 'None':
+			paras -= 1
+		interval = n*paras
+		os.chdir(root+task)
 		print(os.getcwd())
 		for j in targets:
-			ll, dist = parse_log(root+i+'/'+j+'/dist.log')
-			os.chdir(root+'plots/'+i)
+			ll, dist = parse_log(os.path.join(root,task,j),interval)
+			if not os.path.exists(os.path.join(root,task,'plots')):
+				os.mkdir(os.path.join(root,task,'plots'))
+			os.chdir(os.path.join(root,task,'plots'))
 			plot(ll,j,'ll')
 			plot(dist,j,'dist')
 

@@ -3,9 +3,7 @@ from __future__ import division
 import sys, getopt, ConfigParser, os, json, subprocess, math
 from decimal import Decimal
 
-
 args = sys.argv[1:]
-#argv = ['s',0,0,0,0,0,1,0]
 
 optlist, args = getopt.getopt(args, 'bsrcp:v')
 argv = [sys.argv[0]]+args
@@ -250,14 +248,6 @@ assert(FPS == 300), "WRONG FPS"
 ifGUI = simCfg.getint('DEFAULT','GUI')
 duration = simCfg.getfloat('DEFAULT','duration')
 
-# CREATE RESULT PATH
-# objResultPath = 'obj'
-# matResultPath = 'mat'
-
-# for k in range(objnum):
-    # objResultPath+='-%d'%objs[k].objId
-#     matResultPath+='-%d-%d-%d'%(objs[k].matId[0],objs[k].matId[1],objs[k].matId[2])
-
 resultPath = TARGET
 simFilePath = os.path.join(resultPath,'sim')
 renderPath = os.path.join(resultPath,'render') #
@@ -289,8 +279,6 @@ with cd(simFilePath):
             if not os.path.exists('%03d.orig.obj'%obj.objId):
                 subprocess.call('ln -s %s'%os.path.join(ROOT,'%03d'%obj.objId,'%03d.orig.obj'%obj.objId)\
                             +' %03d.orig.obj'%obj.objId,shell=True)
-            #print 'ln -s %s'%os.path.join(ROOT,'data/single_shape','%03d'%obj.objId,'%03d.obj'%obj.objId)
-            #print 'ln -s %s'%os.path.join(ROOT,'data/single_shape','%03d'%obj.objId,'%03d.orig.obj'%obj.objId)
         subprocess.call('sh %s '%os.path.join(SCRIPT,'prepare_dat.sh'),shell=True)
         print("CALLING prepare_dat.sh")
     if (skip_sound!=True):
@@ -323,7 +311,7 @@ with cd(simFilePath):
                               '%03d.ev'%objs[obj_id].objId)+\
                             ' %03d.ev'%objs[obj_id].objId,shell=True)
 
-            print 'sh %s'%os.path.join(SCRIPT,'prepare_ini.sh')+' -i %d '%obj_id\
+            print 'bash %s'%os.path.join(SCRIPT,'prepare_ini.sh')+' -i %d '%obj_id\
                                 + objs[obj_id].WriteShellCmd()
 
             if os.path.exists('./../sound.wav'):
@@ -333,18 +321,14 @@ with cd(simFilePath):
 
             if is_overwrite:
                 print "OVERWRITE!!!"
-                # subprocess.call('rm *.wav',shell = True)
-                # subprocess.call('rm *.raw',shell = True)
                 if os.path.exists('./../sound.wav'):
                     subprocess.call('rm ./../sound.wav',shell = True)
 
             if not os.path.exists('./../sound.wav') or not os.path.exists('./../sound.raw'):
                 print 'wav not generated yet, working on it !'
-                # subprocess.call('rm *.wav',shell = True)
-                # subprocess.call('rm *.raw',shell = True)
                 os.getcwd()
                 subprocess.call('bash %s'%os.path.join(SCRIPT,'prepare_ini.sh')+' -i %d '%obj_id\
-                                + objs[obj_id].WriteShellCmd(),shell=True)
+                                + objs[obj_id].WriteShellCmd(),shell=True,executable='/bin/bash')
                 if not os.path.exists('continuous_audio1.wav'):
                     subprocess.call('echo %03d sound failed! > %03d.txt'%(objs[obj_id].objId,objs[obj_id].objId),shell=True)
                 subprocess.call('mv *1.wav ./../sound.wav',shell=True)
@@ -354,10 +338,6 @@ with cd(simFilePath):
             subprocess.call('mv moments moments-%03d'%(objs[obj_id].objId),shell=True)
             subprocess.call('unlink %03d.geo.txt'%objs[obj_id].objId,shell=True)
             subprocess.call('unlink %03d.ev'%objs[obj_id].objId,shell=True)
-            #subprocess.call('unlink %d.obj'%obj.objId,shell=True)
-            #subprocess.call('unlink %d.orig.obj'%obj.objId,shell=True)
-        #copy all wav file to parent folder
-        #subprocess.call('mv *.wav ./../',shell=True)
         
     if skip_rendering!=True and (not os.path.exists('./../sli.mp4') or is_overwrite):
         subprocess.call('sh /data/vision/billf/object-properties/sound/sound/primitives/scripts/single_shape/unset.sh',shell=True)
@@ -387,7 +367,6 @@ with cd(simFilePath):
         subprocess.call('unset PYTHONPATH',shell = True)
         subprocess.call('%s %s --background --python %s %s %d'%(BLENDER,blank,blenderScript,\
                          os.path.join(simFilePath,'blender_render.cfg'),skip_factor),shell=True)
-        # subprocess.call('source ~/.bash_profile',shell = True)
 if skip_video!=True:
     actobj_num = []
     for obj in objs:
@@ -404,7 +383,6 @@ if skip_video!=True:
         ffmpeg_audio_cmd+= '-filter_complex amix=inputs=%d:duration=longest merged.wav -y'%(len(actobj_num))
     ffmpeg_movie_cmd = 'ffmpeg -i sli.mp4 -i merged.wav -crf 0 -vcodec libx264 result.mp4 -y'
     with cd(resultPath):
-        #subprocess.call('rm -rf sli.mp4 merged.wav result.mp4',shell=True)
         print 'calling %s\n'%ffmpeg_video_cmd 
         subprocess.call(ffmpeg_video_cmd,shell=True)
         print 'calling %s\n'%ffmpeg_audio_cmd 

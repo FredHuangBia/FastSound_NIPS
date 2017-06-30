@@ -2,8 +2,6 @@ import os
 
 path = "/data/vision/billf/object-properties/sound/sound/primitives/data/v2.3/"
 
-
-
 ptmean=0
 ptmax=0
 ptmin=1000000

@@ -38,7 +38,7 @@ CLICKSYNTH=${SOURCECODE}/sound/code/Modal_nodisplay/build/bin/click_synth
 FILEGENERATORS=${SOURCECODE}/sound/code/file_generators
 BULLET=${SOURCECODE}/sound/primitives/code/bullet3/bin
 echo ${OBJNAME}
-echo hello
+#echo hello
 # Generating .ini File
 echo -e "${GREEN}==>Creating Config File for Sound Generation${NC}" #| tee -a "$LOGFILE"
 printf "[mesh]\n" > click_temp.ini
@@ -47,7 +47,7 @@ cat click_temp.ini collision_output-${OBJID}.dat > click.ini
 rm click_temp.ini
 
 ################################################################
-
+echo $LD_LIBRARY_PATH
 # click_synth
 echo -e "${GREEN}==>Generating Continuous Audio (click_synth)${NC}" #| tee -a "$LOGFILE"
 ${CLICKSYNTH} -platform offscreen click.ini #| tee -a "$LOGFILE"

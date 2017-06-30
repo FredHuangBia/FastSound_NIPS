@@ -9,13 +9,6 @@ import glob
 
 thnum =20
 
-
-# obj_list_path= '/data/vision/billf/object-properties/sound/sound/data/final100/small_stats.txt'
-# mat_matrix_path  = '/data/vision/billf/object-properties/sound/sound/data/material_matrix.dat'
-
-# obj_list_file = open(obj_list_path,'r')
-# mat_matrix_file = open(mat_matrix_path,'r')
-
 obj_list = os.listdir("/data/vision/billf/object-properties/sound/sound/primitives/shapes/all/")
 
 task_list = dict()
